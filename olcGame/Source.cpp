@@ -42,13 +42,18 @@ public:
 	{
 
 		ball.x -= ball.Speed[0];
-		ball.y -= ball.Speed[1];
+		ball.y -= 0.2;
 		//INPUT
 		//INPUT
-		if (GetKey(olc::Key::UP).bHeld)
+		if (GetKey(olc::Key::W).bHeld)
 			left.y -= 0.2;
-		else if (GetKey(olc::Key::DOWN).bHeld)
+		else if (GetKey(olc::Key::S).bHeld)
 			left.y += 0.2;
+
+		if (GetKey(olc::Key::UP).bHeld)
+			right.y -= 0.2;
+		else if (GetKey(olc::Key::DOWN).bHeld)
+			right.y += 0.2;
 		//INPUT
 		//INPUT
 
@@ -61,12 +66,20 @@ public:
 				ball.Speed[1] = (rand()%1)/10; //y
 			}
 			else
-				ball.x = 75;
+				ball.x = 75; //reset
 				ball.y = 40;
 				right.score++;
 
-		if(ball.x > 150) //TODO zweiter Schäger
-			ball.Speed[0] *= -1;
+		if (ball.x > 146)
+			if (ball.y <= right.y + 15 && ball.y >= right.y - 1)
+			{
+				ball.Speed[0] *= -1; //x
+				ball.Speed[1] = (rand() % 1) / 10; //y
+			}
+			else
+				ball.x = 75; //reset
+				ball.y = 40;
+				left.score++;
 
 		//COLLISION
 		//COLLISION
@@ -78,8 +91,11 @@ public:
 			for (int h = 0; h < ScreenHeight(); h++)
 				Draw(w, h, olc::Pixel(0,0,0));
 		//Draw
-		for(int i = 0; i < left.height; i++) // Draw Racket
+		for(int i = 0; i < left.height; i++) // Draw Racket Left
 			Draw(3, left.y+i, olc::Pixel(255, 255, 255));
+
+		for (int i = 0; i < right.height; i++) // Draw Racket Right
+			Draw(146, right.y + i, olc::Pixel(255, 255, 255));
 
 		Draw(ball.x, ball.y, olc::Pixel(255, 255, 255));
 		//RENDERING

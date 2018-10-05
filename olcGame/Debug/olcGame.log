@@ -1,9 +1,14 @@
 ﻿  Source.cpp
 b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(36): warning C4305: '=': truncation from 'double' to 'float'
 b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(37): warning C4305: '=': truncation from 'double' to 'float'
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(45): warning C4305: '-=': truncation from 'double' to 'float'
 b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(49): warning C4305: '-=': truncation from 'double' to 'float'
 b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(51): warning C4305: '+=': truncation from 'double' to 'float'
-b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(61): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(82): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
-b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(84): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(54): warning C4305: '-=': truncation from 'double' to 'float'
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(56): warning C4305: '+=': truncation from 'double' to 'float'
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(66): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(77): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(95): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(98): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+b:\dokumente\cpp_code\olcgame\olcgame\source.cpp(100): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
   olcGame.vcxproj -> B:\Dokumente\CPP_Code\olcGame\Debug\olcGame.exe
