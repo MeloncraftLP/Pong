@@ -45,7 +45,7 @@ public:
 		ball.y -= 0.2;
 		//INPUT
 		//INPUT
-		if (GetKey(olc::Key::W).bHeld)
+		if (GetKey(olc::Key::W).bHeld) //TODO Player isn't allowed to exit the frame
 			left.y -= 0.2;
 		else if (GetKey(olc::Key::S).bHeld)
 			left.y += 0.2;
@@ -91,6 +91,11 @@ public:
 			for (int h = 0; h < ScreenHeight(); h++)
 				Draw(w, h, olc::Pixel(0,0,0));
 		//Draw
+		for (int j = 0; j < ScreenHeight(); j++)
+			
+		//TODO: Line in the Middle
+
+
 		for(int i = 0; i < left.height; i++) // Draw Racket Left
 			Draw(3, left.y+i, olc::Pixel(255, 255, 255));
 
