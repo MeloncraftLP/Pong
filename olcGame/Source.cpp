@@ -1,6 +1,7 @@
 #include "olcPixelGameEngine.h"
+#include <cstring>
 
-// Strukturen
+//Strucutures
 struct sRacket
 {
 	const int width = 1;
@@ -17,17 +18,34 @@ struct sBall
 	float Speed[2];
 };
 
-//Strukturen
+//Structures
 sRacket left;
 sRacket right;
 sBall ball;
+
+auto GlobalScore = left.score + " : " + right.score; //Score
+
+void reset() //Functions
+{
+	ball.x = 75;
+	ball.y = 40;
+	ball.Speed[1] = rand() % 40; //y
+	ball.Speed[1] = (ball.Speed[1] - 20) / 100; //y
+}
+
+void collision()
+{
+	ball.Speed[0] *= -1; //x
+	ball.Speed[1] = rand() % 40; //y
+	ball.Speed[1] = (ball.Speed[1] - 20) / 100; //y
+}
 
 class PixelGame : public olc::PixelGameEngine
 {
 public:
 	PixelGame()
 	{
-		sAppName = "PixelGame";
+		sAppName = "Pong";
 	}
 
 public:
@@ -40,75 +58,63 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override //GameLoop
 	{
+		ball.x -= ball.Speed[0]; //Changing the x and y. So that the ball moves.
+		ball.y -= ball.Speed[1];
 
-		ball.x -= ball.Speed[0];
-		ball.y -= 0.2;
-		//INPUT
-		//INPUT
-		if (GetKey(olc::Key::W).bHeld) //TODO Player isn't allowed to exit the frame
+		if (GetKey(olc::Key::W).bHeld) //Input (left)
 			left.y -= 0.2;
 		else if (GetKey(olc::Key::S).bHeld)
 			left.y += 0.2;
 
-		if (GetKey(olc::Key::UP).bHeld)
+		if (GetKey(olc::Key::UP).bHeld) //Input (right)
 			right.y -= 0.2;
-		else if (GetKey(olc::Key::DOWN).bHeld)
+		else if (GetKey(olc::Key::DOWN).bHeld) 
 			right.y += 0.2;
-		//INPUT
-		//INPUT
 
-		//COLLISION
-		//COLLISION
-		if (ball.x < 3)
+		if (ball.x < 3) //Collision-Detection (left)
 			if (ball.y <= left.y + 15 && ball.y >= left.y - 1)
-			{
-				ball.Speed[0] *= -1; //x
-				ball.Speed[1] = (rand()%1)/10; //y
-			}
-			else
-				ball.x = 75; //reset
-				ball.y = 40;
+				collision();
+			else 
+			{ //no Collision -> Goal
+				reset();
 				right.score++;
-
-		if (ball.x > 146)
-			if (ball.y <= right.y + 15 && ball.y >= right.y - 1)
-			{
-				ball.Speed[0] *= -1; //x
-				ball.Speed[1] = (rand() % 1) / 10; //y
 			}
+
+		if (ball.x > 146) //Collision-Detection (right)
+			if (ball.y <= right.y + 15 && ball.y >= right.y - 1)
+				collision();
 			else
-				ball.x = 75; //reset
-				ball.y = 40;
+			{ //no Collision -> Goal
+				reset();
 				left.score++;
+			}
 
-		//COLLISION
-		//COLLISION
+		if (ball.y <= 0) //Collision on Sealing
+			ball.Speed[1] *= -1;
 
-		//RENDERING
-		//RENDERING
-		//Clear
-		for (int w = 0; w < ScreenWidth(); w++)
+		else if (ball.y >= 80) //Collision on Floor
+			ball.Speed[1] *= -1;
+
+		for (int w = 0; w < ScreenWidth(); w++) //Clear the Screen
 			for (int h = 0; h < ScreenHeight(); h++)
 				Draw(w, h, olc::Pixel(0,0,0));
-		//Draw
-		for (int j = 0; j < ScreenHeight(); j++)
-			
-		//TODO: Line in the Middle
 
-
-		for(int i = 0; i < left.height; i++) // Draw Racket Left
+		for(int i = 0; i < left.height; i++) // Draw Racket (left)
 			Draw(3, left.y+i, olc::Pixel(255, 255, 255));
 
-		for (int i = 0; i < right.height; i++) // Draw Racket Right
+		for (int i = 0; i < right.height; i++) // Draw Racket (right)
 			Draw(146, right.y + i, olc::Pixel(255, 255, 255));
 
-		Draw(ball.x, ball.y, olc::Pixel(255, 255, 255));
-		//RENDERING
-		//RENDERING
+		Draw(ball.x, ball.y, olc::Pixel(255, 255, 255)); //Draw Ball
+
+		std::string GlobalScore = "" + std::to_string(left.score) + " : " + std::to_string(right.score); //Adding Information to the String
+		if (left.score >= 10) //Centering the Text
+			DrawString(48, 0, GlobalScore, olc::WHITE, 1U);
+		else
+			DrawString(56, 0, GlobalScore, olc::WHITE, 1U);
 
 		return true;
 	}
-
 };
 
 int main() //Main
